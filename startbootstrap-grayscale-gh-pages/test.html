@@ -1,0 +1,52 @@
+<html>
+    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <head>
+        <title>Tpoto-HistoryQA</title>
+        <link rel="stylesheet" href={{ url_for('static', filename='css/historyQA.css') }} />
+    </head>
+    <style>
+        
+    .star{ font-size:50px;  color:#ccc; cursor:pointer;} /*原始样式*/
+    .star:hover{ font-size:55px;  color:#ccc; cursor:pointer;} /*原始样式*/
+    .cs{font-size:60px;color:#f00;}/*点击后出现样式*/
+    
+    </style>
+    <body>
+        <div style="text-align: center">
+            <h1>Tpoto-HistoryQA</h1>
+        </div>
+        <!-- <div>
+            <input type="text" value="請在此處輸入您的想法">
+        </div> -->
+        <div id="QAtable">
+	       <div id="QAitems">
+		      {% for row in QA %}
+		      <div>
+			     <hr id="seperator">
+			     <div id="itemName">
+                    <span id="Ques">Question: {{row[2]}}</span><br>
+                    <span id="Ans">Answer: {{row[3]}}</span><br>
+                    <p class="star">&#10084;</p>
+                    <a href="/starFromQA?qid={{row[0]}}">收藏</a>
+                    <a href="/removeFromQA?qid={{row[0]}}">刪除</a>
+                    <!-- 跳轉到反饋界面 -->
+                    <a>反饋</a>
+			     </div>
+		      </div>
+		      {% endfor %}
+		      <hr id="seperator">
+<!--		      <div id="total">
+			         <span id="subtotal">Subtotal</span> : ${{totalPrice}}
+		          </div> -->
+	       </div>
+        </div>
+    <script>
+        $(function () {            
+            $(".like").click(function () {
+                $(this).toggleClass('cs');                
+            })
+        })
+    </script>
+    </body>
+</html>

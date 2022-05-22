@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import *
 from datetime import datetime
-import sqlite3
-
+import sqlite3, hashlib, os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+app.secret_key = 'random string'
 
 # app.secret_key = 'fkdjsafjdkfdlkjfadskjfadskljdsfklj'
 
@@ -11,12 +12,111 @@ app = Flask(__name__)
 # conn = sqlite3.connect('database.db')
 # c = conn.cursor()
 
+def getLoginDetails():
+    with sqlite3.connect('database.db') as conn:
+        uid = 1
+        session['uid'] = 1
+        cur = conn.cursor()
+        """
+        if 'email' not in session:
+            loggedIn = False
+            firstName = ''
+            noOfItems = 0
+        else:
+        """
+        loggedIn = True
+        cur.execute("SELECT count(qid) FROM QA WHERE uid = " + "1")
+        noOfQA = cur.fetchone()[0]
+    conn.close()
+    return (loggedIn, uid, noOfQA)
 
 @app.route('/')
-def index():
-    
-    return render_template("index.html")
+def root():
+    loggedIn, uid, noOfQA= getLoginDetails()
+    return render_template("index.html", loggedIn=loggedIn, uid=uid, noOfQA=noOfQA)
 
+###TODO:刪除歷史問答###
+@app.route("/removeFromQA")
+def removeFromQA():  
+    uid = session['uid']
+    qid = int(request.args.get('qid'))
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+#        cur.execute("SELECT uid FROM users WHERE email = '" + email + "'")
+#        userId = cur.fetchone()[0]
+        try:
+            cur.execute("DELETE FROM QA WHERE uid = " + str(uid) + " AND qid = " + str(qid))
+            conn.commit()
+            msg = "removed successfully"
+        except:
+            conn.rollback()
+            msg = "error occured"
+    conn.close()
+    return redirect(url_for('historyQA'))
+
+###TODO:收藏歷史問答 考虑是否进行功能删减
+@app.route("/starFromQA")
+def starFromQA():
+    uid = session['uid']
+    qid = int(request.args.get('qid'))
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+#        cur.execute("SELECT uid FROM users WHERE email = '" + email + "'")
+#        userId = cur.fetchone()[0]
+        try:
+            if 'star' == true:
+                cur.execute("UPDATE QA SET star = true WHERE uid = " + str(uid) + " AND qid = " + str(qid))
+                conn.commit()
+                msg = "removed successfully"
+            else:
+                cur.execute("UPDATE QA SET star = false WHERE uid = " + str(uid) + " AND qid = " + str(qid))
+                conn.commit()
+                msg = "removed successfully"
+        except:
+            conn.rollback()
+            msg = "error occured"
+    conn.close()
+    return redirect(url_for('historyQA'))
+
+@app.route("/historyQA")
+def historyQA():
+    loggedIn, uid, noOfQA= getLoginDetails()
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT qid, star, ques, ans from QA where uid = " + str(uid))
+        QA = cur.fetchall()
+    return render_template("historyQA.html", QA = QA, loggedIn=loggedIn, uid=uid, noOfQA=noOfQA)
+
+@app.route("/feedbackForm")
+def feedbackForm():
+    loggedIn, uid, noOfQA= getLoginDetails()
+    with sqlite3.connect('database.db') as conn:
+        cur = conn.cursor()
+        cur.execute("SELECT qid, star, ques, ans from QA where uid = " + str(uid))
+        QA = cur.fetchall()
+    return render_template("feedback.html", loggedIn=loggedIn, uid=uid, noOfQA=noOfQA)
+
+@app.route("/feedback", methods = ['GET', 'POST'])
+def feedback():
+    loggedIn, uid, noOfQA= getLoginDetails()
+    if request.method == 'POST':
+        #Parse form data    
+        ftype = request.form['ftype']
+        ftext = request.form['ftext']
+
+        with sqlite3.connect('database.db') as con:
+            try:
+                cur = con.cursor()
+                cur.execute('INSERT INTO  feedback (ftype, ftext, uid) VALUES (?, ?, ?)', (ftype, ftext, uid))
+
+                con.commit()
+
+                msg = "Feedback Successfully"
+            except:
+                con.rollback()
+                msg = "Error occured"
+        con.close()
+        return render_template("feedback.html", error=msg)
 # @app.route('/login', methods=['POST'])
 # def login():
 #     if request.method == 'POST':
