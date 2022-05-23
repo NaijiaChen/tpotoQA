@@ -3,6 +3,7 @@
     <head>
         <title>Tpoto-HistoryQA</title>
         <link rel="stylesheet" href={{ url_for('static', filename='css/historyQA.css') }} />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     </head>
     <style>
         
@@ -10,34 +11,39 @@
     .cs{color:#f00;}/*点击后出现样式*/
     
     </style>
-    <body>
-        <div style="text-align: center">
-            <h1>Tpoto-HistoryQA</h1>
+    <body style="background-color: #F0F0F0">
+        <a href="/">>>>返回主頁</a>
+        <div class="card" style="margin-top:100px; margin-left: 250px; margin-right: 250px" >
+        
+        
+        <div class="card-header" style="text-align: center;">
+            <h1>歷史問答</h1>
         </div>
         <!-- <div>
             <input type="text" value="請在此處輸入您的想法">
         </div> -->
-        <div id="QAtable">
+        <div class="card-body" id="QAtable" class="card">
 	       <div id="QAitems">
 		      {% for row in QA %}
 		      <div>
-			     <hr id="seperator">
 			     <div id="itemName">
                     <span id="Ques">Question: {{row[2]}}</span><br>
                     <span id="Ans">Answer: {{row[3]}}</span><br>
-                     <a class="star" onclick="changeColor(this)" > &#10084;</a> 
+                     <a class="star" onclick="changeColor(this)" > &#9829;</a> 
                     <a href="/removeFromQA?qid={{row[0]}}">刪除</a>
                     <!-- 跳轉到反饋界面 -->
                     <a href="/feedbackForm">反饋</a>
 			     </div>
+                <hr id="seperator">
 		      </div>
 		      {% endfor %}
-		      <hr id="seperator">
 <!--		      <div id="total">
 			         <span id="subtotal">Subtotal</span> : ${{totalPrice}}
 		          </div> -->
 	       </div>
         </div>
+        </div>
+<!--        <a class="star" onclick="changeColor(this)" > &#10084;</a> -->
 
     <script>
         function changeColor(id){
