@@ -3,6 +3,7 @@ import sqlite3, hashlib, os
 import httpx
 from werkzeug.utils import secure_filename
 from IPython.display import HTML, display, clear_output
+import json
 
 app = Flask(__name__)
 app.secret_key = 'random string'
@@ -29,7 +30,11 @@ def getLoginDetails():
 @app.route('/')
 def root():
     loggedIn, uid, noOfQA= getLoginDetails()
-    return render_template("index.html", loggedIn=loggedIn, uid=uid, noOfQA=noOfQA)
+    json_url = './tpotoQA/Character.json'
+    json_file = open(json_url, 'r', encoding="utf-8")
+    config = json.loads(json_file.read())
+    json_file.close()
+    return render_template("index.html", loggedIn=loggedIn, uid=uid, noOfQA=noOfQA, config=config)
 # 問答頁面
 @app.route('/question')
 def question():
