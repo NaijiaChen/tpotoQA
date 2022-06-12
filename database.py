@@ -3,6 +3,14 @@ import sqlite3
 
 conn = sqlite3.connect('database.db')
 
+conn.execute('''CREATE TABLE users 
+		(password TEXT,
+		uid TEXT,
+		firstName TEXT,
+		address TEXT,
+		country TEXT, 
+		phone TEXT
+		)''')
 conn.execute('''create table QA (
     qid int,
     uid int,

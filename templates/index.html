@@ -27,6 +27,15 @@
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="./historyQA">History Q&A</a></li>
                         <li class="nav-item"><a class="nav-link" href="./feedbackForm">Feedback</a></li>
+                        {% if not loggedIn %}
+                        <div>
+                        <li class="nav-item"><a class="nav-link" href="./loginForm">Log in</a></li>
+                        </div>
+                        {% else %}
+                        <div>
+                        <li class="nav-item"><a class="nav-link" href="./logout">Sign Out</a></li>
+                        </div>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
