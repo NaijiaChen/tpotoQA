@@ -32,12 +32,12 @@ def getLoginDetails():
 def root():
     loggedIn, firstName, noOfQA= getLoginDetails()
 
-    json_url = './Character.json'
+    json_url = './tpotoQA/Character.json'
 
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
-    return render_template("index.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
+    return render_template("index.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA, config=config)
 # 問答頁面
 @app.route('/question')
 def question():
@@ -53,14 +53,26 @@ def question():
     return render_template("question.html")
 
 # 答案頁面
-@app.route('/anser', methods=['POST'])
+@app.route('/answer', methods=['POST'])
 def anser():
     content=request.form.get('content')
     question=request.form.get('question')
+    uid = session['uid']
     url = "https://pu.ap-mic.com/qa"
     data = {"content":content[:2000], "question":question}
     r = httpx.post(url, json = data, timeout=300)
     answer = r.json()['answer']
+    with sqlite3.connect('database.db') as con:
+        
+        try:    
+            cur = con.cursor()
+            cur.execute('INSERT INTO QA (uid, ques, ans) VALUES (?, ?, ?)', (uid, question, answer))
+            con.commit()
+            msg = "Save Successfully"
+        except:
+            con.rollback()
+            msg = "Error occured"
+    con.close()
     return answer
 
 
@@ -139,7 +151,7 @@ def feedback():
         #Parse form data    
         ftype = request.form['ftype']
         ftext = request.form['ftext']
-
+        uid = session['uid']
         with sqlite3.connect('database.db') as con:
             try:
                 cur = con.cursor()
