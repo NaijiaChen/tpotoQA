@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify 
 import sqlite3, hashlib, os
 import httpx
 from werkzeug.utils import secure_filename
@@ -12,7 +12,6 @@ app.secret_key = 'random string'
 # 獲取登錄情況
 def getLoginDetails():
     with sqlite3.connect('database.db') as conn:
-        #session['uid'] = 1
         cur = conn.cursor()
         if 'uid' not in session:
             loggedIn = False
@@ -27,54 +26,47 @@ def getLoginDetails():
     conn.close()
     return (loggedIn, firstName, noOfQA)
 
-#主頁
+# 主頁
 @app.route('/')
 def root():
     loggedIn, firstName, noOfQA= getLoginDetails()
-
     json_url = './tpotoQA/Character.json'
-
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
     return render_template("index.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA, config=config)
+
 # 問答頁面
-@app.route('/question')
+@app.route('/question',methods=['GET','POST'])
 def question():
-    """json_url = 'D:/專題/动态网页/动态网页/tpotoQA-master/contents.json'
-    json_file = open(json_url, 'w', encoding="utf-8")
-    json_array = json.load(json_file)
-    list = []
-    for item in json_array:
-        details = {}
-        details['conts'] = item['conts']
-        list.append(details)
-    json_file.close()"""
+    if request.method == "GET": 
+        return render_template("question.html")
+    if request.method == "POST": 
+        content=request.form.get('content')
+        question=request.form.get('question')
+        uid = session['uid']
+        url = "https://pu.ap-mic.com/qa";
+        data = {"content":content[:2000], "question":question}
+        r = httpx.post(url, json = data, timeout=300)
+        answer = r.json()['answer']
+        if answer:
+            with sqlite3.connect('database.db') as con:
+                try:      
+                    cur = con.cursor()
+                    cur.execute('SELECT COUNT(*) from QA')
+                    results = cur.fetchone()[0]+1
+
+
+                    cur.execute('INSERT INTO QA (qid, uid, ques, ans) VALUES (?, ?, ?, ?)', (results, uid, question, answer))
+                    con.commit()
+                    msg = "Save Successfully"
+                except:
+                    con.rollback()
+                    msg = "Error occured"
+            con.close()
+            return jsonify({'output':answer}) 
+        return jsonify({'error' : 'Missing data!'})
     return render_template("question.html")
-
-# 答案頁面
-@app.route('/answer', methods=['POST'])
-def anser():
-    content=request.form.get('content')
-    question=request.form.get('question')
-    uid = session['uid']
-    url = "https://pu.ap-mic.com/qa"
-    data = {"content":content[:2000], "question":question}
-    r = httpx.post(url, json = data, timeout=300)
-    answer = r.json()['answer']
-    with sqlite3.connect('database.db') as con:
-        
-        try:    
-            cur = con.cursor()
-            cur.execute('INSERT INTO QA (uid, ques, ans) VALUES (?, ?, ?)', (uid, question, answer))
-            con.commit()
-            msg = "Save Successfully"
-        except:
-            con.rollback()
-            msg = "Error occured"
-    con.close()
-    return answer
-
 
 ###TODO:刪除歷史問答###
 @app.route("/removeFromQA")
@@ -83,8 +75,7 @@ def removeFromQA():
     qid = int(request.args.get('qid'))
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-#        cur.execute("SELECT uid FROM users WHERE email = '" + email + "'")
-#        userId = cur.fetchone()[0]
+
         try:
             cur.execute("DELETE FROM QA WHERE uid = " + str(uid) + " AND qid = " + str(qid))
             conn.commit()
@@ -95,31 +86,8 @@ def removeFromQA():
     conn.close()
     return redirect(url_for('historyQA'))
 
-###TODO:收藏歷史問答 考虑是否进行功能删减
-#@app.route("/starFromQA")
-#def starFromQA():
-#    uid = session['uid']
-#    qid = int(request.args.get('qid'))
-#    with sqlite3.connect('database.db') as conn:
-#        cur = conn.cursor()
-##        cur.execute("SELECT uid FROM users WHERE uid = '" + uid + "'")
-##        userId = cur.fetchone()[0]
-#        try:
-#            if 'star' == True:
-#                cur.execute("UPDATE QA SET star = true WHERE uid = " + str(uid) + " AND qid = " + str(qid))
-#                conn.commit()
-#                msg = "removed successfully"
-#            else:
-#                cur.execute("UPDATE QA SET star = false WHERE uid = " + str(uid) + " AND qid = " + str(qid))
-#                conn.commit()
-#                msg = "removed successfully"
-#        except:
-#            conn.rollback()
-#            msg = "error occured"
-#    conn.close()
-#    return redirect(url_for('historyQA'))
 
-#歷史問答
+# 歷史問答
 @app.route("/historyQA")
 def historyQA():
     loggedIn, firstName, noOfQA= getLoginDetails()
@@ -131,7 +99,7 @@ def historyQA():
         
     return render_template("historyQA.html", QA = QA, loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
 
-#反饋表格？
+# 反饋表格？
 @app.route("/feedbackForm")
 def feedbackForm():
     loggedIn, firstName, noOfQA= getLoginDetails()
@@ -142,7 +110,7 @@ def feedbackForm():
         QA = cur.fetchall()
     return render_template("feedback.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
 
-#反饋界面
+# 反饋界面
 @app.route("/feedback", methods = ['GET', 'POST'])
 def feedback():
     loggedIn, firstName, noOfQA= getLoginDetails()
@@ -166,7 +134,7 @@ def feedback():
         con.close()
         return render_template("feedback.html", error=msg)
     
-#跳轉登錄界面（檢查是否已經登錄）
+# 跳轉登錄界面（檢查是否已經登錄）
 @app.route("/loginForm")
 def loginForm():
     if 'uid' in session:
@@ -174,15 +142,15 @@ def loginForm():
     else:
         return render_template('login.html', error='')
 
-#從登錄界面返回主頁
+# 從登錄界面返回主頁
 @app.route("/goHomeFromLogin")
 def goHomeFromLogin():
     return redirect(url_for('root'))
-#從註冊界面返回主頁
+# 從註冊界面返回主頁
 @app.route("/goHomeFromRegister")
 def goHomeFromRegister():
     return redirect(url_for('root'))
-#登錄
+# 登錄
 @app.route("/login", methods = ['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -194,7 +162,7 @@ def login():
         else:
             error = 'Invalid UserId / Password'
             return render_template('login.html', error=error)
-#登出
+# 登出
 @app.route("/logout")
 def logout():
     session.pop('uid', None)
