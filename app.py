@@ -30,7 +30,9 @@ def getLoginDetails():
 @app.route('/')
 def root():
     loggedIn, uid, noOfQA= getLoginDetails()
+
     json_url = './tpotoQA/Character.json'
+
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
@@ -38,7 +40,17 @@ def root():
 # 問答頁面
 @app.route('/question')
 def question():
+    """json_url = 'D:/專題/动态网页/动态网页/tpotoQA-master/contents.json'
+    json_file = open(json_url, 'w', encoding="utf-8")
+    json_array = json.load(json_file)
+    list = []
+    for item in json_array:
+        details = {}
+        details['conts'] = item['conts']
+        list.append(details)
+    json_file.close()"""
     return render_template("question.html")
+
 # 答案頁面
 @app.route('/anser', methods=['POST'])
 def anser():
