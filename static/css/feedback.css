@@ -1,5 +1,0 @@
-textarea {
-  border : 0;
-  overflow-y : auto; /* IE */
-  resize : none; /* Firefox, Chrome */
-}

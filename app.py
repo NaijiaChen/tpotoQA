@@ -30,7 +30,9 @@ def getLoginDetails():
 @app.route('/')
 def root():
     loggedIn, uid, noOfQA= getLoginDetails()
-    json_url = 'C:/Users/aya/Downloads/tpotoQA-xinci(1)/tpotoQA-xinci/Character.json'
+
+    json_url = './tpotoQA/Character.json'
+
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
