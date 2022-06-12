@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Registration</title>
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/validateForm.js') }}">
+</script>
+</head>
+<body style="text-align: center; margin: 10px">
+    <div>
+        <h2 style='margin-top: 125px'>Registration</h2>
+    </div>
+<form action="/register" method="POST" onsubmit="return validate()">
+    <p style="margin-top: 75px">ID: <input type="uid" name="uid"></p>
+
+    <P>Password: <input type="password" name="password" id="password" required></P>
+
+    <p>Confirm Password: <input type="password" name="cpassword" id="cpassword"></p>
+
+    <p>Name: <input type="text" name="firstName"></p>
+
+    <p>Address: <input type="text" name="address"></p>
+
+    <p>Country: <input type="text" name="country"></p>
+    <p>Phone Number: <input type="text" name="phone"></p>
+
+    <p style="margin-top: 35px; margin-bottom: 50px"><input type="submit" value="Register"></p>
+
+    <a style="margin: 5px" href="/loginForm">Login</a>
+    <a style="margin: 5px" href="/goHomeFromRegister">Home</a>
+    
+</form>
+</body>
+</html>
+
+
+

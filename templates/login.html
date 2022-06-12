@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Log in</title>
+</head>
+<body style="text-align: center; margin: 10px">
+    <div>
+        <h2 style='margin-top: 200px'>Log in</h2>
+    </div>
+<p> {{error}} </p>
+<form action="/login" method="POST">
+	<p style="margin-top: 75px">ID: <input type="text" name="uid"></p>
+	<p>Password: <input type="password" name="password"></p>
+	<p style="margin-top: 35px;margin-bottom: 50px"><input type="submit" value="Submit"></p>
+	<a style="margin: 5px" href="/registerationForm">Register</a>
+    <a style="margin: 5px" href="/goHomeFromLogin">Home</a>
+</form>
+
+</body>
+</html>

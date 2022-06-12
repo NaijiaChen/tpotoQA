@@ -2,24 +2,22 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>The Phantom of the Opera</title>
-        <link rel="icon" type="./static/image/x-icon" href="/static/assets/favicon.ico" />
+        <link rel="icon" type="./static/image/x-icon" href="./static/assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href={{ url_for('static' , filename='/css/styles.css') }} rel="stylesheet" />
+        <link href={{ url_for('static' , filename='./css/styles.css') }} rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#page-top">HomePage</a>
+                <a class="navbar-brand" href="#page-top">Home</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -29,6 +27,15 @@
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="./historyQA">History Q&A</a></li>
                         <li class="nav-item"><a class="nav-link" href="./feedbackForm">Feedback</a></li>
+                        {% if not loggedIn %}
+                        <div>
+                        <li class="nav-item"><a class="nav-link" href="./loginForm">Log in</a></li>
+                        </div>
+                        {% else %}
+                        <div>
+                        <li class="nav-item"><a class="nav-link" href="./logout">Sign Out</a></li>
+                        </div>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -50,150 +57,27 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h2 class="text-white mb-4">關於</h2>
-                        <p class="text-white-50">
-                            《歌劇魅影》（法語：Le Fantôme de l'Opéra）是一本由法國作家卡斯頓·勒胡所(Caston Leroux, 1868 ~1927)撰著的愛情驚悚小說。他擅長在劇情發展最緊急恐怖的時候，也不忘來點黑色幽默。歌劇魅影的創作靈感來自於一樁真實意外: 「1896年歌劇院一大吊燈無端落下砸死人。」依靠想像和真實事件融合的一場悲情故事。法文版原著在1910年時出版，1911年時首度被翻譯成英文版。音樂劇於1986年首演，作曲由安德魯·洛伊·韋伯創作，對白和歌詞由Richard Stilgoe創作。於1988年獲得七項東尼獎。
-
-故事以19世紀時法國的巴黎歌劇院（法語：Opéra de Paris）為舞台，描述一個年輕的女歌劇演員克莉絲汀‧黛也、一個年輕貴族勞爾與一個躲藏在歌劇院地底的天才音樂怪人（魅影）之間的愛情故事。
-
-劇情簡介：
-在故事中魅影被克莉絲汀不凡的天賦美聲傾慕不已。魅影決定不計一切代價，將年輕貌美的克莉絲汀變為首席女高音。然而最後走火入魔的魅影以更實際的行動，把所有妨礙克莉絲汀歌唱的人一一除掉。
-
-後來，戲院的投資人勞爾認出克莉絲汀是他的兒時玩伴，兩人墜入愛河。魅影發現後，自覺遭到背叛，怒而砍斷舞台大吊燈的鐵鍊，讓整座華麗的水晶燈砰然粉碎在觀眾席上。此時克莉絲汀對他的感情也逐漸從迷戀轉為恐懼、害怕和憐憫。
-
-半年後，勞爾跟克莉絲汀秘密訂婚，魅影突然現身於歌劇院的化裝舞會，強迫歌劇院演出他親手譜作的歌劇《唐璜》，並指名由克莉絲汀擔任女主角。
-
-在《唐璜》首演當日，歌劇院四周佈滿警察，孰料魅影竟然殺死男主角，親身改扮上場，與克莉絲汀演對手戲。在戲演到最高潮時，克莉絲汀當眾扯下他的面具，魅影羞愧心碎之際，動手將克莉絲汀擄至他的地下密室。勞爾追蹤至地下，和魅影展開對決，卻被他用繩索勒住，魅影藉此要脅克莉絲汀答應求婚。
-
-為了保護愛人勞爾，克莉絲汀毅然傾身，狠狠吻著魅影那張彷彿被地獄詛咒的臉。至此，這場愛情的勝負已定。絕望的魅影送走緊緊相擁的這對戀人，在警察和群眾闖入地下密室前，悄然隱去。
-
+                        <p class="text-white">
+                        {%for about in config.about%}    
+                            {{about.string}}
+                        {%endfor%}
                         </p>
                     </div>
                 </div>
             </div>
         </section>
         <!-- Projects-->
-        <section class="projects-section bg-light" id="projects">
+        <div class="projects-section bg-white" id="projects">
                 <!-- Featured Project Row-->
-                <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">艾瑞克</h4>
-                                    <p class="mb-0 text-white-50">隱居在歌劇院的「魅影」。出生於法國魯昂，生來其貌不揚，只能以面具掩面。但是他才華橫溢，擅長作曲和建造各種機關暗器。父母不喜歡他，因此他逃離了家，曾加入吉普賽人團體，後來又遊歷世界。他在波斯得到國王和公主的重用，並參與馬贊德蘭省行宮的修建。但此後他因故失寵被判死刑，幸得波斯警官達洛迦相助才逃到君士坦丁堡。在君士坦丁堡，艾瑞克又效力於土耳其鄂圖曼帝國的國王，同樣負責建造宮殿。之後他回到法國，並暗中參與巴黎歌劇院的建設，在歌劇院的牆壁裡和地下室布滿機關和密室。</p>
-                                    <hr class="d-none d-lg-block mb-0 me-0" />
-                                </div>
-                            </div>
+                <div class="row justify-content-center ">
+                    {%for character in config.character%}
+                        <div class=" mb-2 project-text my-auto bg-black text-lg-left col-lg-8">
+                            <h4 class="text-white">{{character.name}}</h4>
+                            <p class="mb-0 text-white">{{character.introduction}}</p>
                         </div>
-                    </div>
-                </div>
-                <!-- Project One Row-->
-                <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                    <div class="col-lg-6">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-left">
-                                    <h4 class="text-white">克里斯汀·黛也</h4>
-                                    <p class="mb-0 text-white-50">女主角，瑞典裔20歲女高音，心智年齡16歲，父親早亡。她畢業於音樂學校，後來在歌劇院擔任伴舞與伴唱。艾瑞克暗戀她而教她歌唱以接近她，但她將他視為恩師「音樂天使」敬畏。原本不知道他即是音樂天使。後來在艾瑞克的暗中操作下，克里斯汀取代了卡爾洛塔，成為了首席女高音。與身為青梅竹馬的勞爾互相喜歡，最後與他遠走高飛。</p>
-                                    <hr class="d-none d-lg-block mb-0 ms-0" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Project Two Row-->
-                <div class="row gx-0 justify-content-center">
-                    <div class="col-lg-6 order-lg-first">
-                        <div class="bg-black text-center h-100 project">
-                            <div class="d-flex h-100">
-                                <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">勞爾</h4>
-                                    <p class="mb-0 text-white-50">法國貴族，子爵，克里斯汀幼年的玩伴，以優異成績畢業官校的海軍，魅影的情敵。最後魅影放過了他們。勞爾和克里斯汀踏上了北去的列車，去了一個最偏遠的地方。</p>
-                                    <hr class="d-none d-lg-block mb-0 me-0" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-                <div class="col-lg-6">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-left">
-                                <h4 class="text-white">達洛迦</h4>
-                                <p class="mb-0 text-white-50">波斯人，原為波斯的警察長官，因為同情並放走了艾瑞克而被撤職。他知道魅影過去的故事，也是魅影死前唯一一個可以與之談心的人。</p>
-                                <hr class="d-none d-lg-block mb-0 ms-0" />
-                            </div>
-                        </div>
-                    </div>
+                    {%endfor%}
                 </div>
             </div>
-            <div class="row gx-0 justify-content-center">
-                <div class="col-lg-6 order-lg-first">
-                    <div class="bg-black text-center h-100 project">
-                        <div class="d-flex h-100">
-                            <div class="project-text w-100 my-auto text-center text-lg-right">
-                                <h4 class="text-white">菲利浦·夏尼</h4>
-                                <p class="mb-0 text-white-50">法國貴族，伯爵，勞爾的哥哥，反對勞爾與克莉絲汀的感情。</p>
-                                <hr class="d-none d-lg-block mb-0 me-0" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-            <div class="col-lg-6">
-                <div class="bg-black text-center h-100 project">
-                    <div class="d-flex h-100">
-                        <div class="project-text w-100 my-auto text-center text-lg-left">
-                            <h4 class="text-white">喬瑟夫·布葛</h4>
-                            <p class="mb-0 text-white-50">歌劇院的布景師，因為發現了魅影的秘密而被魅影吊死在舞台上。</p>
-                            <hr class="d-none d-lg-block mb-0 ms-0" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row gx-0 justify-content-center">
-            <div class="col-lg-6 order-lg-first">
-                <div class="bg-black text-center h-100 project">
-                    <div class="d-flex h-100">
-                        <div class="project-text w-100 my-auto text-center text-lg-right">
-                            <h4 class="text-white">卡爾洛塔</h4>
-                            <p class="mb-0 text-white-50">歌劇院的首席女高音，本來是很照顧克里斯汀的前輩，後因謠言說克莉絲汀陷害自己而討厭她。</p>
-                            <hr class="d-none d-lg-block mb-0 me-0" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row gx-0 mb-5 mb-lg-0 justify-content-center">
-            <div class="col-lg-6">
-                <div class="bg-black text-center h-100 project">
-                    <div class="d-flex h-100">
-                        <div class="project-text w-100 my-auto text-center text-lg-left">
-                            <h4 class="text-white">神秘黑影</h4>
-                            <p class="mb-0 text-white-50">同樣生活在地下室，一個比艾瑞克更可怕的神秘人物。他唯一一次現身時披著長斗篷，在漆黑的地下室裡不提燈籠地前行。波斯人都認識他，但不願提起任何細節。</p>
-                            <hr class="d-none d-lg-block mb-0 ms-0" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </section>
-        <!-- Contact-->
-        <section class="contact-section bg-black">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5">   
-                </div>
-                <div class="social d-flex justify-content-center">
-                    
-                </div>
-            </div>
-        </section>
-
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
