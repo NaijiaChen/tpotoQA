@@ -25,8 +25,16 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        {% if loggedIn %}
+                        <div>
                         <li class="nav-item"><a class="nav-link" href="./historyQA">History Q&A</a></li>
+                        </div>
+                        {% endif %}
+                        {% if loggedIn %}
+                        <div>
                         <li class="nav-item"><a class="nav-link" href="./feedbackForm">Feedback</a></li>
+                        </div>
+                        {% endif %}
                         {% if not loggedIn %}
                         <div>
                         <li class="nav-item"><a class="nav-link" href="./loginForm">Log in</a></li>
