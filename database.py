@@ -3,6 +3,14 @@ import sqlite3
 
 conn = sqlite3.connect('database.db')
 
+conn.execute('''CREATE TABLE users 
+		(password TEXT,
+		uid TEXT,
+		firstName TEXT,
+		address TEXT,
+		country TEXT, 
+		phone TEXT
+		)''')
 conn.execute('''create table QA (
     qid int,
     uid int,
@@ -11,9 +19,11 @@ conn.execute('''create table QA (
     star boolean
     )''')
 conn.execute("insert into QA (qid, uid, ques, ans, star)\
-            values(1, 1, '死的人是誰？', '約瑟夫', true)")
+            values(1, 123456, '死的人是誰？', '約瑟夫', true)")
 conn.execute("insert into QA (qid, uid, ques, ans, star)\
-            values(2, 1, '真的存在鬼嗎？', '不假', false)")
+            values(2, 123456, '真的存在鬼嗎？', '不假', false)")
+conn.execute("insert into QA (qid, uid, ques, ans, star)\
+            values(3, 123456, '梳妝台上有什麼東西？', '鏡子', false)")
 
 conn.execute('''create table Feedback (
     ftype varchar(50),
