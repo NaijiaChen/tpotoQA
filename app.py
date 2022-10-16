@@ -209,5 +209,11 @@ def register():
 def registrationForm():
     return render_template("register.html")
 
+@app.route("/content")
+def content():
+    return render_template("content.html")
+@app.route("/recodeContent.json")
+def recodeContent():
+    return render_template("recodeContent.json")
 if __name__ == '__main__':
     app.run(debug=True)

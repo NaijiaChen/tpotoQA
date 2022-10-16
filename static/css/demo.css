@@ -1,0 +1,18 @@
+.chart{
+     width: 70%;
+    justify-content: center;
+}
+.chart-cid{
+    border: 1px solid #dee2e6 !important;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+
+}
+.chart-space {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+}
