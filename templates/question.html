@@ -1,74 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+        />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="../static/css/common.css"
+        />
+        <title>Question</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="../static/js/question.js"></script>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./static/css/common.css">
-    <title>Question</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-
-<body class="masthead">
-    <a class="btn btn-home btn-primary" href="/" role="button">Home</a>
-    <footer class="card ">
-        <h1 class="card-header" style="text-align: center">問答</h1>
-        <form class="form" method="POST" action="question">
-            <div class="card-body ">
-                <div>
-                    <span>文章: </span>
-                </div>
-                <textarea class="input-group form-control " rows="7" id="content" name="content" required="required"
-                    placeholder="輸入文章，限2000字以內"></textarea>
-            </div>
-
-            <div class="card-body">
-                <div>
-                    <span>問題: </span>
-                </div>
-                <input class="input-group form-control" type="text" id="question" name="question" required="required"
-                    placeholder="輸入問題">
-            </div>
-
-            <div class="card-body">
-                <div >
-                    <span>答案:</span>
-                    <span  id="answer"></span>
-                </div>
-            </div>
-            
-            <div class="text-center mb-3">
-                <input class="btn btn-dark" id="submit" type="button" name="submit" value="查詢">
-            </div>
-        </form>
+    <body class="masthead">
+        <div class="table">
+            <a class="btn btn-home btn-primary" href="/" role="button">Home</a>
+            <div class="table-text">問答</div>
         </div>
+        <div class="container chart question" id="content">
+            
+        </div>
+        <div class="container chart question">
+            <h1 class="card-header" style="text-align: center">問答</h1>
+            <form class="form" method="POST" action="question">
+                <div class="card-body">
+                    <div>
+                        <span>文章: </span>
+                    </div>
+                    <textarea
+                        class="input-group form-control"
+                        rows="7"
+                        id="content"
+                        name="content"
+                        required="required"
+                        placeholder="輸入文章，限2000字以內"
+                    ></textarea>
+                </div>
 
-</body>
-<script>
-    $(document).ready(function () {
-        $("#submit").click(function () {
-            let content = $('#content').val();
-            let question = $("#question").val();
-            console.log(content);
-            console.log(question);
+                <div class="card-body">
+                    <div>
+                        <span>問題: </span>
+                    </div>
+                    <input
+                        class="input-group form-control"
+                        type="text"
+                        id="question"
+                        name="question"
+                        required="required"
+                        placeholder="輸入問題"
+                    />
+                </div>
 
-            $.ajax({
-                url: '/question',
-                method: 'POST',
-                dataType: 'json',
-                data: { content: content, question: question },
-                success: function (res) {
-                   $("#answer").text(res['output']);
-                },
-                error: function (res) {
-                    console.log("no")
-                }
+                <div class="card-body">
+                    <div>
+                        <span>答案:</span>
+                        <span id="answer"></span>
+                    </div>
+                </div>
+
+                <div class="text-center mb-3">
+                    <input
+                        class="btn btn-dark"
+                        id="submit"
+                        type="button"
+                        name="submit"
+                        value="查詢"
+                    />
+                </div>
+            </form>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                let content = $("#content").val();
+                let question = $("#question").val();
+                console.log(content);
+                console.log(question);
+
+                $.ajax({
+                    url: "/question",
+                    method: "POST",
+                    dataType: "json",
+                    data: { content: content, question: question },
+                    success: function (res) {
+                        $("#answer").text(res["output"]);
+                    },
+                    error: function (res) {
+                        console.log("no");
+                    },
+                });
             });
-        })
-    });
-
-</script>
-
+        });
+    </script>
 </html>

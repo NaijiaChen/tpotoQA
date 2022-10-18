@@ -1,6 +1,35 @@
-.chart{
-     width: 70%;
+.table{
+    display: flex;
     justify-content: center;
+    padding: 1rem;
+}
+.table-text {
+    display: flex;
+    justify-content: center;
+    color: #dee2e6;
+    border: 0.3rem solid #000000 !important;
+    background-color: rgb(80, 80, 80);
+    font-size: 2em;
+    padding: 1rem;
+    /* padding-bottom: 1rem; */
+}
+.introduce {
+    display: flex;
+    padding: 2rem;
+}
+.img-size{
+    width: 8rem;
+}
+.introduce-author{
+    padding-left: 1rem;
+}
+.chart{
+    width: 70%;
+    justify-content: center;
+    background-color: white;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    padding-bottom: 5rem;
 }
 .chart-cid{
     border: 1px solid #dee2e6 !important;
@@ -15,4 +44,7 @@
     height: 4rem;
     display: flex;
     align-items: center;
+}
+body{
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/backgroud.jpg");
 }
