@@ -24,9 +24,38 @@
   margin: 0 auto;
   margin-top: 2%;
 }
-.c
-ard-body{
-  margin-bottom:3 auto
+
+.chart {
+  width: 70%;
+  justify-content: center;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 2rem;
+  margin-bottom: 2rem;
+}
+.chart-btn{
+  display: flex;
+  width: 70%;
+  justify-content: space-around;
+  padding: 1rem;
+  border-radius: 2rem;
+  margin-bottom: 2rem;
+}
+.chart-btn-color{
+  background-color: white;
+  border: 1px solid #dee2e6 !important;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.card-header{
+  text-align: center
+}
+.card-body {
+  margin-bottom: 3 auto;
+
 }
 
 .masthead {
@@ -39,8 +68,16 @@ ard-body{
   background-attachment: fixed;
   background-size: cover;
 }
-.form{
-      width: 80%;
-      margin: 0 auto;
+
+.form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.table {
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+
 }
 
