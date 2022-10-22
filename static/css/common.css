@@ -1,22 +1,9 @@
 /* feedback, historyQA, question */
-.body{
-  background-color: #F0F0F0;
-}
-.masthead {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-size: cover;
-}
 
-.btn-home{
-  position: relative;
+.btn-home {
   margin-top: 2%;
   left: 2.5%;
+  float: left;
 }
 
 .card {
@@ -24,7 +11,10 @@
   margin: 0 auto;
   margin-top: 2%;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/xinci
 .chart {
   width: 70%;
   justify-content: center;
@@ -33,6 +23,7 @@
   border-radius: 2rem;
   margin-bottom: 2rem;
 }
+<<<<<<< HEAD
 .chart-btn{
   display: flex;
   width: 70%;
@@ -56,18 +47,30 @@
 .card-body {
   margin-bottom: 3 auto;
 
+=======
+
+.c ard-body {
+  margin-bottom: 3 auto;
+>>>>>>> origin/xinci
 }
 
 .masthead {
   position: relative;
   width: 100%;
   height: auto;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/backgroud.jpg");
+  background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.3) 0%,
+          rgba(0, 0, 0, 0.7) 75%,
+          #000 100%
+      ),
+      url("../assets/img/backgroud.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
+<<<<<<< HEAD
 
 .form {
   width: 80%;
@@ -79,5 +82,24 @@
   padding: 1rem;
   justify-content: center;
 
+=======
+.form {
+  width: 80%;
+  margin: 0 auto;
+>>>>>>> origin/xinci
 }
 
+.table {
+  display: flex;
+  padding: 1rem;
+}
+
+.table-text {
+  display: flex;
+  justify-content: center;
+  color: #dee2e6;
+  border: 0.3rem solid #000000 !important;
+  background-color: rgb(80, 80, 80);
+  font-size: 2em;
+  padding: 1rem;
+}

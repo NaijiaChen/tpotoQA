@@ -6,6 +6,7 @@
         return null;
     };
 })(jQuery);
+<<<<<<< HEAD
 
 var chapter = $.getUrlParam("chapter"); //url後面的當下章數值
 var cid = $.getUrlParam("cid"); //url後面的當下節數值
@@ -36,11 +37,28 @@ $(document).ready(function(){
 
 var ctext = "";
 function charter() {
+=======
+var chapter = $.getUrlParam("chapter");
+var cid = $.getUrlParam("cid");
+var chapterid = chapter - 1;
+var cidnum = cid - 1;
+console.log(chapter);
+console.log(chapterid);
+console.log(cid);
+console.log(cidnum);
+$(document).ready(function () {
+    charter();
+});
+
+function charter() {
+    //   var chart = $("#id");
+>>>>>>> origin/xinci
     $.ajax({
         url: "./recodeContent.json",
         method: "GET",
         dataType: "json",
         success: function (res) {
+<<<<<<< HEAD
             $(".table-text").html(
                 "第" +
                     res[chapterid]["chapter"] +
@@ -138,9 +156,22 @@ function charter() {
                     `./question?chapter=${res[chapterid]["chapter"]}&cid=${datacid}`
                 );
             }
+=======
+
+            $("#content").html(res[chapterid]["data"][cidnum]["ctext"]);
+            console.log(res);
+            // console.log(res[chapterid]["data"][cid]);
+            console.log(res[chapterid]["data"][cidnum]['ctext']);
+>>>>>>> origin/xinci
         },
         error: function (res) {
             console.log("no");
         },
     });
+<<<<<<< HEAD
 }
+=======
+    // for (var i = 1;i<)
+}
+
+>>>>>>> origin/xinci

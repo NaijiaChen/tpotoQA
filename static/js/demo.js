@@ -8,7 +8,10 @@ function charter() {
     method: "GET",
     dataType: "json",
     success: function (res) {
+<<<<<<< HEAD
       console.log(res);
+=======
+>>>>>>> origin/xinci
       for (var i = 0; i < res.length; i++) {
         var Chart = $("<div>");
         Chart.addClass("row");
@@ -25,7 +28,11 @@ function charter() {
           );
           Cid.html("第"+res[i]["data"][j]["cid"]+"節");
           Chart.append(Cid);
+<<<<<<< HEAD
           // console.log(i + "." + res[i]["data"][j]["cid"]);
+=======
+          console.log(i + "." + res[i]["data"][j]["cid"]);
+>>>>>>> origin/xinci
         }
         $("#charter").append(Chart);
       }
