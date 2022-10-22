@@ -19,30 +19,33 @@
     </head>
 
     <body class="masthead">
-        <div class="table">
+        <nav>
             <a class="btn btn-home btn-primary" href="/" role="button">Home</a>
+        </nav>
+        <div class="table">
             <div class="table-text">問答</div>
         </div>
-        <div class="container chart question" id="content">
-            
+        <div class="container chart" id="content"></div>
+        <div class="container chart-btn" id="chart-num">
+            <a
+                class="chart-btn-color col-3 btn btn-outline-secondary"
+                id="last"
+                >
+            </a>
+            <a
+                class="chart-btn-color col-3 btn btn-outline-secondary"
+                href="./content"
+                >目錄
+            </a>
+            <a
+                class="chart-btn-color col-3 btn btn-outline-secondary"
+                id="next"
+                >
+            </a>
         </div>
-        <div class="container chart question">
-            <h1 class="card-header" style="text-align: center">問答</h1>
+        <div class="container chart">
+            <h1 class="card-header">問答</h1>
             <form class="form" method="POST" action="question">
-                <div class="card-body">
-                    <div>
-                        <span>文章: </span>
-                    </div>
-                    <textarea
-                        class="input-group form-control"
-                        rows="7"
-                        id="content"
-                        name="content"
-                        required="required"
-                        placeholder="輸入文章，限2000字以內"
-                    ></textarea>
-                </div>
-
                 <div class="card-body">
                     <div>
                         <span>問題: </span>
@@ -55,48 +58,14 @@
                         required="required"
                         placeholder="輸入問題"
                     />
-                </div>
-
-                <div class="card-body">
-                    <div>
+                    <div >
                         <span>答案:</span>
-                        <span id="answer"></span>
+                        <span  id="answer"></span>
+                    </div>
+                    <div class="text-center mb-3">
+                        <input class="btn btn-dark" id="submit" type="button" name="submit" value="查詢">
                     </div>
                 </div>
-
-                <div class="text-center mb-3">
-                    <input
-                        class="btn btn-dark"
-                        id="submit"
-                        type="button"
-                        name="submit"
-                        value="查詢"
-                    />
-                </div>
-            </form>
         </div>
-    </body>
-    <script>
-        $(document).ready(function () {
-            $("#submit").click(function () {
-                let content = $("#content").val();
-                let question = $("#question").val();
-                console.log(content);
-                console.log(question);
-
-                $.ajax({
-                    url: "/question",
-                    method: "POST",
-                    dataType: "json",
-                    data: { content: content, question: question },
-                    success: function (res) {
-                        $("#answer").text(res["output"]);
-                    },
-                    error: function (res) {
-                        console.log("no");
-                    },
-                });
-            });
-        });
-    </script>
+    </body>>
 </html>

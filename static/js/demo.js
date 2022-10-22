@@ -24,7 +24,6 @@ function charter() {
           );
           Cid.html("第"+res[i]["data"][j]["cid"]+"節");
           Chart.append(Cid);
-          console.log(i + "." + res[i]["data"][j]["cid"]);
         }
         $("#charter").append(Chart);
       }

@@ -42,9 +42,10 @@ def question():
     if request.method == "GET": 
         return render_template("question.html")
     if request.method == "POST": 
+        
         content=request.form.get('content')
         question=request.form.get('question')
-        uid = session['uid']
+        # uid = session['uid']
         url = "https://pu.ap-mic.com/qa";
         data = {"content":content[:2000], "question":question}
         r = httpx.post(url, json = data, timeout=300)
@@ -64,9 +65,7 @@ def question():
                     con.rollback()
                     msg = "Error occured"
             con.close()
-            return jsonify({'output':answer}) 
-        return jsonify({'error' : 'Missing data!'})
-    return render_template("question.html")
+            return jsonify({'output':answer})
 
 ###TODO:刪除歷史問答###
 @app.route("/removeFromQA")
