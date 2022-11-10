@@ -4,7 +4,7 @@
 
 body{
   background: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
-  width: 100%;
+
 }
 .container {
     font-family: "Noto Sans TC","cwTeXFangSong","微軟正黑體", sans-serif;
@@ -63,8 +63,6 @@ body{
 }
 
 .btn-primary {
-  padding: 15px 32px;
-  font-size: 25px;
   color: #fff;
   background-color: #64a19d;
   border-color: #64a19d;

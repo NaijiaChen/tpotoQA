@@ -8,33 +8,56 @@
     </head>
     
     <body class="masthead">
-        <a class="btn btn-home btn-primary " href="/" role="button">Home</a>
-        <div class="card">
-            <h2 class="card-header" style="text-align: center">聯絡我們</h2>
-            <div class="card-body">
-                <p>非常感謝您對我們的支持，如果您在使用的過程中有遇到任何問題，歡迎您在下方提出您的想法。</p>
-                <form action="/feedback" method="POST" onsubmit="return validate()">
-                    <select name="ftype" style="text-align: left" name="feedbackType" size="1">
-                        <option value="請選擇你的想法類型">請選擇你的想法類型</option>
-                        <option value="问答问题">答案有誤或不準確</option>
-                        <option value="页面问题">頁面問題</option>
-                        <option value="资料问题">資料有誤</option>
-                        <option value="建議">建議</option>
-                    </select>
-                    <p style="text-align: center;">
-                        <textarea class="input-group mb-3 form-control" name="ftext" style="resize:none;" name="textfield" cols="100px" rows="10" resize="none">請在此處輸入你的想法</textarea>
-                    </p>
-                    <div style="text-align: right">
-                        <a  ><input class="btn btn-dark" onclick="pressTip()" type="submit" alert="提交成功" value="提交"></a>
-                        <a><input class="btn btn-dark" type="reset" value="重寫"></a>
-                    </div>
-                </form>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+            <div  class="container-fluid">
+                <a class="navbar-brand" href="/">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class=" collapse navbar-collapse"  id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        {% if loggedIn %}
+                        <li class="nav-item"><a class="nav-link " href="./historyQA">History Q&A</a></li>
+                        <li class="nav-item"><a class="nav-link " href="./feedbackForm">Feedback</a></li>
+                        {% endif %}
+                        {% if not loggedIn %}
+                        <li class="nav-item"><a class="nav-link " href="./loginForm">Log in</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link "  href="./logout">Sign Out</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="table">
+            <div class="card">
+                <h2 class="card-header" style="text-align: center">聯絡我們</h2>
+                <div class="card-body">
+                    <p>非常感謝您對我們的支持，如果您在使用的過程中有遇到任何問題，歡迎您在下方提出您的想法。</p>
+                    <form action="/feedback" method="POST" onsubmit="return validate()">
+                        <select name="ftype" style="text-align: left" name="feedbackType" size="1">
+                            <option value="請選擇你的想法類型">請選擇你的想法類型</option>
+                            <option value="问答问题">答案有誤或不準確</option>
+                            <option value="页面问题">頁面問題</option>
+                            <option value="资料问题">資料有誤</option>
+                            <option value="建議">建議</option>
+                        </select>
+                        <p style="text-align: center;">
+                            <textarea class="input-group mb-3 form-control" name="ftext" style="resize:none;" name="textfield" cols="100px" rows="10" resize="none">請在此處輸入你的想法</textarea>
+                        </p>
+                        <div style="text-align: right">
+                            <a  ><input class="btn btn-dark" onclick="pressTip()" type="submit" alert="提交成功" value="提交"></a>
+                            <a><input class="btn btn-dark" type="reset" value="重寫"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        </div>
+        
         <script>
-        function pressTip(){
-            alert("提交成功，確認後返回反饋界面");
-        }
+            function pressTip(){
+                alert("提交成功，確認後返回反饋界面");
+            }
         </script>
     </body>
 </html>

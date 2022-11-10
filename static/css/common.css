@@ -1,11 +1,5 @@
 /* feedback, historyQA, question */
 
-.btn-home {
-  margin-top: 2%;
-  left: 2.5%;
-  float: left;
-}
-
 .card {
   width: 80%;
   margin: 0 auto;
@@ -69,14 +63,11 @@
 
 .table {
   display: flex;
-  padding: 1rem;
+  /* padding: 1rem; */
   justify-content: center;
+  padding-top:5rem
 }
 
-.table {
-  display: flex;
-  padding: 1rem;
-}
 
 .table-text {
   display: flex;

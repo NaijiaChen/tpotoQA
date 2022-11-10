@@ -39,13 +39,14 @@ def root():
 # 問答頁面
 @app.route('/question',methods=['GET','POST'])
 def question():
+    loggedIn, firstName, noOfQA= getLoginDetails()
+    uid = session['uid']
     if request.method == "GET": 
-        return render_template("question.html")
+        return render_template("question.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
+
     if request.method == "POST": 
-        
         content=request.form.get('content')
         question=request.form.get('question')
-        # uid = session['uid']
         url = "https://pu.ap-mic.com/qa";
         data = {"content":content[:2000], "question":question}
         r = httpx.post(url, json = data, timeout=300)
@@ -56,8 +57,6 @@ def question():
                     cur = con.cursor()
                     cur.execute('SELECT COUNT(*) from QA')
                     results = cur.fetchone()[0]+1
-
-
                     cur.execute('INSERT INTO QA (qid, uid, ques, ans) VALUES (?, ?, ?, ?)', (results, uid, question, answer))
                     con.commit()
                     msg = "Save Successfully"
@@ -74,9 +73,8 @@ def removeFromQA():
     qid = int(request.args.get('qid'))
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-
         try:
-            cur.execute("DELETE FROM QA WHERE uid = " + str(uid) + " AND qid = " + str(qid))
+            cur.execute("DELETE FROM QA WHERE uid = '" + str(uid) + "' AND qid = " + str(qid))
             conn.commit()
             msg = "removed successfully"
         except:
@@ -211,7 +209,8 @@ def registrationForm():
 # 目錄頁面
 @app.route("/content")
 def content():
-    return render_template("content.html")
+    loggedIn, firstName, noOfQA= getLoginDetails()
+    return render_template("content.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
 
 # 目錄資料
 @app.route("/recodeContent.json")
@@ -219,4 +218,5 @@ def recodeContent():
     return render_template("recodeContent.json")
     
 if __name__ == '__main__':
+    os.system('python database.py')
     app.run(debug=True)
