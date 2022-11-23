@@ -30,7 +30,11 @@ def getLoginDetails():
 @app.route('/')
 def root():
     loggedIn, firstName, noOfQA= getLoginDetails()
+<<<<<<< HEAD
     json_url = './Character.json'
+=======
+    json_url = './tpotoQA/Character.json'
+>>>>>>> 9a5a10403df4e0cd4f59864971e4e2039c29862b
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
@@ -129,7 +133,11 @@ def feedback():
                 con.rollback()
                 msg = "Error occured"
         con.close()
+<<<<<<< HEAD
         return redirect(url_for('feedbackForm'))
+=======
+        return render_template("feedback.html", error=msg)
+>>>>>>> 9a5a10403df4e0cd4f59864971e4e2039c29862b
     
 # 跳轉登錄界面（檢查是否已經登錄）
 @app.route("/loginForm")
