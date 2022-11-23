@@ -8,31 +8,51 @@
         <title>HistoryQA</title>
     </head>
     <style>
-        
-    .star{color:#ccc;} /*原始样式*/
-    .cs{color:#f00;}/*点击后出现样式*/
-    
+        .star{color:#ccc;} /*原始样式*/
+        .cs{color:#f00;}/*点击后出现样式*/
     </style>
     <body class="masthead">
-        <a class="btn btn-home btn-primary" href="/" role="button">Home</a>
-        <div class="card" >
-            <h2 class="card-header" style="text-align: center">歷史問答</h2>
-            <div class="card-body" id="QAtable" class="card">
-            <div id="QAitems">
-                {% for row in QA %}
-                <div>
-                    <div id="itemName">
-                        <span id="Ques">Question: {{row[2]}}</span><br>
-                        <span id="Ans">Answer: {{row[3]}}</span><br>
-                        <a class="star" onclick="changeColor(this)" > &#9829;</a> 
-                        <a href="/removeFromQA?qid={{row[0]}}">刪除</a>
-                        <!-- 跳轉到反饋界面 -->
-                        <a href="/feedbackForm">反饋</a>
-                    </div>
-                    <hr id="seperator">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
+            <div  class="container-fluid">
+                <a class="navbar-brand" href="/">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class=" collapse navbar-collapse"  id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        {% if loggedIn %}
+                        <li class="nav-item"><a class="nav-link " href="./historyQA">History Q&A</a></li>
+                        <li class="nav-item"><a class="nav-link " href="./feedbackForm">Feedback</a></li>
+                        {% endif %}
+                        {% if not loggedIn %}
+                        <li class="nav-item"><a class="nav-link " href="./loginForm">Log in</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link "  href="./logout">Sign Out</a></li>
+                        {% endif %}
+                    </ul>
                 </div>
-                {% endfor %}
             </div>
+        </nav>
+        <div class="table">
+            <div class="card">
+                <h2 class="card-header" style="text-align: center">歷史問答</h2>
+                <div class="card-body" id="QAtable" class="card">
+                    <div id="QAitems">
+                        {% for row in QA %}
+                        <div>
+                            <div id="itemName">
+                                <span id="Ques">Question: {{row[2]}}</span><br>
+                                <span id="Ans">Answer: {{row[3]}}</span><br>
+                                <!-- <a class="star" onclick="changeColor(this)" > &#9829;</a> -->
+                                <a href="/removeFromQA?qid={{row[0]}}">刪除</a>
+                                <!-- 跳轉到反饋界面 -->
+                                <a href="/feedbackForm">反饋</a>
+                            </div>
+                            <hr id="seperator">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
 

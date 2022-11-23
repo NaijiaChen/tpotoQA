@@ -1,0 +1,76 @@
+/* 仿宋體字體 */
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/earlyaccess/cwtexfangsong.css);
+
+body{
+  background: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.9) 75%, rgba(0, 0, 0, 0.8) 100%);
+  width: 100%;
+}
+.container {
+    font-family: "Noto Sans TC","cwTeXFangSong","微軟正黑體", sans-serif;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    width:1000px;
+  }
+.card {
+    height:588px;
+    width:1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("../assets/img/card_front.png") no-repeat center / cover;
+    margin:10px;
+  }
+.card-title {
+    color: white;
+    text-align:center;
+    font-size: 100px;
+  }
+.card-text {
+    display: none;
+}
+.card:hover{
+    background: url("../assets/img/card_back.png") no-repeat center / cover;
+}
+.card:hover .card-title {
+    display: none;
+}
+.card:hover .card-text {
+    padding: 5%;
+    display: block;
+    color: black;
+    font-size: 30px;
+    line-height: 1.5;
+    font-weight: 500;
+} 
+
+.masthead {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 35rem;
+  padding: 15rem 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../assets/img/backgroud.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+.about-section {
+  font-size: 25px;
+  line-height: 1.5;
+}
+
+.btn-primary {
+  padding: 15px 32px;
+  font-size: 25px;
+  color: #fff;
+  background-color: #64a19d;
+  border-color: #64a19d;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #558985;
+  border-color: #50817e;
+}
