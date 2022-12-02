@@ -130,6 +130,7 @@ def feedback():
                 msg = "Error occured"
         con.close()
         return render_template("feedback.html", error=msg)
+
     
 # 跳轉登錄界面（檢查是否已經登錄）
 @app.route("/loginForm")
