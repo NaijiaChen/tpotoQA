@@ -5,11 +5,7 @@ conn = sqlite3.connect('database.db')
 
 conn.execute('''CREATE TABLE users 
 		(password TEXT,
-		uid TEXT,
-		firstName TEXT,
-		address TEXT,
-		country TEXT, 
-		phone TEXT
+		uid TEXT
 		)''')
 conn.execute('''create table QA (
     qid int,

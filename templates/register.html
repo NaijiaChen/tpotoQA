@@ -1,44 +1,101 @@
 <html>
-<head>
+    <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="stylesheet" href={{ url_for('static', filename='./css/common.css') }} />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-<title>Registration</title>
-<script type="text/javascript" src="{{ url_for('static', filename = 'js/validateForm.js') }}">
-</script>
-</head>
-<body class="masthead">
-    <a class="btn btn-home btn-primary " href="/" role="button">Home</a>
-    <div class="card w-50" style="width: 200px">
-    <div>
-        <h2 class="card-header" style='text-align: center;'>Registration</h2>
-    </div>
-    <div class="card-body" style="text-align: center;">
-<form action="/register" method="POST" onsubmit="return validate()">
-    <p style="margin-top: 75px">ID: <input type="uid" name="uid"></p>
-
-    <P>Password: <input type="password" name="password" id="password" required></P>
-
-    <p>Confirm Password: <input type="password" name="cpassword" id="cpassword"></p>
-
-    <p>Name: <input type="text" name="firstName"></p>
-
-    <p>Address: <input type="text" name="address"></p>
-
-    <p>Country: <input type="text" name="country"></p>
-    <p>Phone Number: <input type="text" name="phone"></p>
-
-    <p style="margin-top: 35px; margin-bottom: 50px"><input type="submit" value="Register"></p>
-
-    <a style="margin: 5px" href="/loginForm">Login</a>
-    
-    
-</form>
+        <link rel="stylesheet" href={{ url_for('static',
+        filename='./css/common.css') }} />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+        />
+        <title>Registration</title>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename = 'js/validateForm.js') }}"
+        ></script>
+    </head>
+    <body class="masthead">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Home</a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div
+                    class="collapse navbar-collapse"
+                    id="navbarSupportedContent"
+                >
+                    <ul class="nav navbar-nav ms-auto">
+                        {% if loggedIn %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="./historyQA"
+                                >History Q&A</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./feedbackForm"
+                                >Feedback</a
+                            >
+                        </li>
+                        {% endif %} {% if not loggedIn %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="./loginForm">Log in</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="./logout">Sign Out</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="table">
+            <div class="card w-50" style="width: 200px">
+                <h2 class="card-header" style="text-align: center">
+                    Registration
+                </h2>
+                <div class="card-body" style="text-align: center">
+                    <form
+                        action="/register"
+                        method="POST"
+                        onsubmit="return validate()"
+                    >
+                        <p style="margin-top: 75px">
+                            ID: <input type="uid" name="uid" />
+                        </p>
+                        <p>
+                            Password:
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                required
+                            />
+                        </p>
+                        <p>
+                            Confirm Password:
+                            <input
+                                type="password"
+                                name="cpassword"
+                                id="cpassword"
+                            />
+                        </p>
+                        <p style="margin-top: 35px; margin-bottom: 50px">
+                            <input type="submit" value="Register" />
+                        </p>
+                        <a style="margin: 5px" href="/loginForm">Login</a>
+                    </form>
+                </div>
+            </div>
         </div>
-        </div>
-</body>
+    </body>
 </html>
-
-
-

@@ -16,33 +16,33 @@ def getLoginDetails():
         if 'uid' not in session:
             loggedIn = False
             noOfQA = 0
-            firstName = ''
+            ID = ''
         else:
             loggedIn = True
             cur.execute("SELECT count(qid) FROM QA WHERE uid = ' " + str(session['uid']) +"'")
             noOfQA = cur.fetchone()[0]
-            cur.execute("SELECT firstName FROM Users WHERE uid = ' " + str(session['uid']) +"'")
-            firstName = cur.fetchone()
+            cur.execute("SELECT uid FROM Users WHERE uid = ' " + str(session['uid']) +"'")
+            ID = cur.fetchone()
     conn.close()
-    return (loggedIn, firstName, noOfQA)
+    return (loggedIn, ID, noOfQA)
 
 # 主頁
 @app.route('/')
 def root():
-    loggedIn, firstName, noOfQA= getLoginDetails()
+    loggedIn,ID, noOfQA= getLoginDetails()
     json_url = './tpotoQA/Character.json'
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
-    return render_template("index.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA, config=config)
+    return render_template("index.html", loggedIn=loggedIn, ID=ID, noOfQA=noOfQA, config=config)
 
 # 問答頁面
 @app.route('/question',methods=['GET','POST'])
 def question():
-    loggedIn, firstName, noOfQA= getLoginDetails()
+    loggedIn, ID, noOfQA= getLoginDetails()
     uid = session['uid']
     if request.method == "GET": 
-        return render_template("question.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
+        return render_template("question.html", loggedIn=loggedIn, ID=ID, noOfQA=noOfQA)
 
     if request.method == "POST": 
         content=request.form.get('content')
@@ -87,30 +87,30 @@ def removeFromQA():
 # 歷史問答
 @app.route("/historyQA")
 def historyQA():
-    loggedIn, firstName, noOfQA= getLoginDetails()
+    loggedIn, ID, noOfQA= getLoginDetails()
     uid = session['uid']
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute("SELECT qid, star, ques, ans from QA where uid = '" + str(uid)+"'")
         QA = cur.fetchall()
         
-    return render_template("historyQA.html", QA = QA, loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
+    return render_template("historyQA.html", QA = QA, loggedIn=loggedIn, ID=ID, noOfQA=noOfQA)
 
-# 反饋表格？
+# 反饋表格
 @app.route("/feedbackForm")
 def feedbackForm():
-    loggedIn, firstName, noOfQA= getLoginDetails()
+    loggedIn, ID, noOfQA= getLoginDetails()
     uid = session['uid']
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
         cur.execute("SELECT qid, star, ques, ans from QA where uid = '" + str(uid)+"'")
         QA = cur.fetchall()
-    return render_template("feedback.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
+    return render_template("feedback.html", loggedIn=loggedIn, ID=ID, noOfQA=noOfQA)
 
 # 反饋界面
 @app.route("/feedback", methods = ['GET', 'POST'])
 def feedback():
-    loggedIn, firstName, noOfQA= getLoginDetails()
+    loggedIn, ID, noOfQA= getLoginDetails()
     
     if request.method == 'POST':
         #Parse form data    
@@ -121,15 +121,13 @@ def feedback():
             try:
                 cur = con.cursor()
                 cur.execute('INSERT INTO  feedback (ftype, ftext, uid) VALUES (?, ?, ?)', (ftype, ftext, uid))
-
                 con.commit()
-
                 msg = "Feedback Successfully"
             except:
                 con.rollback()
                 msg = "Error occured"
         con.close()
-        return render_template("feedback.html", error=msg)
+        return render_template("feedback.html", error=msg, loggedIn=loggedIn, ID=ID, noOfQA=noOfQA)
 
     
 # 跳轉登錄界面（檢查是否已經登錄）
@@ -184,18 +182,12 @@ def register():
         #Parse form data    
         uid = request.form['uid']
         password = request.form['password']
-        firstName = request.form['firstName']
-        address = request.form['address']
-        country = request.form['country']
-        phone = request.form['phone']
 
         with sqlite3.connect('database.db') as con:
             try:
                 cur = con.cursor()
-                cur.execute('INSERT INTO users (password, uid, firstName, address, country, phone) VALUES (?, ?, ?, ?, ?, ?)', (hashlib.md5(password.encode()).hexdigest(), uid, firstName, address,  country, phone))
-
+                cur.execute('INSERT INTO users (password, uid) VALUES (?, ?)', (hashlib.md5(password.encode()).hexdigest(), uid))
                 con.commit()
-
                 msg = "Registered Successfully"
             except:
                 con.rollback()
@@ -210,8 +202,8 @@ def registrationForm():
 # 目錄頁面
 @app.route("/content")
 def content():
-    loggedIn, firstName, noOfQA= getLoginDetails()
-    return render_template("content.html", loggedIn=loggedIn, firstName=firstName, noOfQA=noOfQA)
+    loggedIn, ID, noOfQA= getLoginDetails()
+    return render_template("content.html", loggedIn=loggedIn, ID=ID, noOfQA=noOfQA)
 
 # 目錄資料
 @app.route("/recodeContent.json")
@@ -219,5 +211,5 @@ def recodeContent():
     return render_template("recodeContent.json")
     
 if __name__ == '__main__':
-    os.system('python database.py')
+    os.system('python ./tpotoQA//database.py')
     app.run(debug=True)
