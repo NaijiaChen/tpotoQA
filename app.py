@@ -30,7 +30,7 @@ def getLoginDetails():
 @app.route('/')
 def root():
     loggedIn,ID, noOfQA= getLoginDetails()
-    json_url = './tpotoQA/Character.json'
+    json_url = './Character.json'
     json_file = open(json_url, 'r', encoding="utf-8")
     config = json.loads(json_file.read())
     json_file.close()
@@ -40,7 +40,8 @@ def root():
 @app.route('/question',methods=['GET','POST'])
 def question():
     loggedIn, ID, noOfQA= getLoginDetails()
-    uid = session['uid']
+    if 'uid' in session:
+        uid = session['uid']
     if request.method == "GET": 
         return render_template("question.html", loggedIn=loggedIn, ID=ID, noOfQA=noOfQA)
 
